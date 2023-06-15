@@ -45,9 +45,11 @@ const numberButtons = document.querySelectorAll(".number");
 
 numberButtons.forEach(e => {
     e.addEventListener("click", event => {
+        
         if (displayBox.textContent == 0 || completed){
             displayBox.textContent = event.target.textContent;
             completed = false;
+            
         } else {
             if (firstNumber){
                 if (secondNumber == null){
@@ -71,6 +73,7 @@ numberButtons.forEach(e => {
 const operators = document.querySelectorAll('.operator');
 operators.forEach(e=>{
     e.addEventListener("click", event=>{
+        completed = false;
         firstNumber = Number(displayBox.textContent);
         if (firstNumber && operator) {
             secondNumber = Number(displayBox.textContent);
@@ -97,12 +100,12 @@ equals.addEventListener("click", event=>{
     if(firstNumber != null && secondNumber != null && operator){
         let num = operate(firstNumber,secondNumber, operator); 
         displayBox.textContent = Math.round(num*1000)/1000;
-        
+        firstNumber = null;
+        secondNumber = null;
+        operator = null;
+        completed = true;
     }
-    firstNumber = null;
-    secondNumber = null;
-    operator = null;
-    completed = true;
+    
 })
 
 const clear = document.querySelector('.clear');

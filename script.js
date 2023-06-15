@@ -1,7 +1,8 @@
 let firstNumber;
 let secondNumber;
 let operator;
-let lastPressed;
+let completed;
+
 
 const displayBox = document.querySelector(".display");
 
@@ -44,14 +45,24 @@ const numberButtons = document.querySelectorAll(".number");
 
 numberButtons.forEach(e => {
     e.addEventListener("click", event => {
-        if (displayBox.textContent == 0){
+        if (displayBox.textContent == 0 || completed){
             displayBox.textContent = event.target.textContent;
+            completed = false;
         } else {
             if (firstNumber){
-                displayBox.textContent = event.target.textContent;
-            } else {
+                if (secondNumber == null){
+                    displayBox.textContent = event.target.textContent;
+                    secondNumber = Number(displayBox.textContent);
+                } else {
+                    display(event.target.textContent);
+                    secondNumber = Number(displayBox.textContent);
+                }
+                
+            } else{
                 display(event.target.textContent);
             }
+            
+            
             
         }
     })
@@ -60,21 +71,16 @@ numberButtons.forEach(e => {
 const operators = document.querySelectorAll('.operator');
 operators.forEach(e=>{
     e.addEventListener("click", event=>{
-        
+        firstNumber = Number(displayBox.textContent);
         if (firstNumber && operator) {
             secondNumber = Number(displayBox.textContent);
-            let num = operate(firstNumber,secondNumber, operator);
-            if (num % 1 != 0){
-                displayBox.textContent = num.toFixed(3);
-            }
-            else {
-                displayBox.textContent = num;
-            }
+            let num = operate(firstNumber,secondNumber, operator); 
+            displayBox.textContent = Math.round(num*1000)/1000;
+            secondNumber = null;
             
             
         }
         operator = event.target.textContent;
-        firstNumber = Number(displayBox.textContent);
         
             
         
@@ -88,19 +94,15 @@ operators.forEach(e=>{
 
 const equals = document.querySelector('.calc');
 equals.addEventListener("click", event=>{
-    secondNumber = Number(displayBox.textContent);
     if(firstNumber != null && secondNumber != null && operator){
-        let num = operate(firstNumber,secondNumber, operator);
-        if (num % 1 != 0){
-            displayBox.textContent = num.toFixed(3);
-        }
-        else {
-            displayBox.textContent = num;
-        }
+        let num = operate(firstNumber,secondNumber, operator); 
+        displayBox.textContent = Math.round(num*1000)/1000;
+        
     }
     firstNumber = null;
     secondNumber = null;
     operator = null;
+    completed = true;
 })
 
 const clear = document.querySelector('.clear');
@@ -109,4 +111,5 @@ clear.addEventListener("click", event=>{
     firstNumber = null;
     secondNumber = null;
     operator = null;
+    completed = true;
 })

@@ -63,7 +63,13 @@ operators.forEach(e=>{
         
         if (firstNumber && operator) {
             secondNumber = Number(displayBox.textContent);
-            displayBox.textContent = operate(firstNumber,secondNumber, operator);
+            let num = operate(firstNumber,secondNumber, operator);
+            if (num % 1 != 0){
+                displayBox.textContent = num.toFixed(3);
+            }
+            else {
+                displayBox.textContent = num;
+            }
             
             
         }
@@ -84,7 +90,13 @@ const equals = document.querySelector('.calc');
 equals.addEventListener("click", event=>{
     secondNumber = Number(displayBox.textContent);
     if(firstNumber != null && secondNumber != null && operator){
-        displayBox.textContent = operate(firstNumber,secondNumber, operator);
+        let num = operate(firstNumber,secondNumber, operator);
+        if (num % 1 != 0){
+            displayBox.textContent = num.toFixed(3);
+        }
+        else {
+            displayBox.textContent = num;
+        }
     }
     firstNumber = null;
     secondNumber = null;

@@ -74,7 +74,6 @@ const operators = document.querySelectorAll('.operator');
 operators.forEach(e=>{
     e.addEventListener("click", event=>{
         completed = false;
-        firstNumber = Number(displayBox.textContent);
         if (firstNumber && operator) {
             secondNumber = Number(displayBox.textContent);
             let num = operate(firstNumber,secondNumber, operator); 
@@ -83,6 +82,7 @@ operators.forEach(e=>{
             
             
         }
+        firstNumber = Number(displayBox.textContent);
         operator = event.target.textContent;
         
             
